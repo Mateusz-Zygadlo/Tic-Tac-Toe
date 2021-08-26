@@ -22,6 +22,8 @@ const game = () => {
 
 }
 
+const gameArr = game().gameBoard;
+
 const playerOne = game().playerOne;
 const playerTwo = game().playerTwo;
 
@@ -31,15 +33,21 @@ for(key in game().gameBoard){
 
 gameArea.forEach(item => {
     item.addEventListener('click', (e) => {
+        if(gameArr[e.target.dataset.id] != ''){
+            count--;
+            return;
+        }
+
         if(count % 2 == 1){
             choice = playerOne;
         }else{
             choice = playerTwo;
         }
-        
 
         gameArea[e.target.dataset.id].textContent = choice;
+        gameArr[e.target.dataset.id] = choice;
         
         count++;
+        console.log(gameArr);
     })
 })
