@@ -28,6 +28,10 @@ const game = () => {
 const rowWinner = () => {
 
     const rowOne = gameArr.slice(0, 3);
+
+    const rowOneTest = rowOne.some(item => item == '');
+    const isEveryOne = rowOne.every(item => item == rowOne[0]);
+
     const rowTwo = gameArr.slice(3, 6);
     const rowThree = gameArr.slice(6, 9);
 
@@ -35,6 +39,8 @@ const rowWinner = () => {
         rowOne,
         rowTwo,
         rowThree,
+        rowOneTest,
+        isEveryOne,
     }
 }
 
@@ -71,9 +77,78 @@ for(key in game().gameBoard){
     gameArea[key].textContent = game().gameBoard[key];
 }
 
+const resetGame = () => {
+    finalPage.classList.add('endPage');
+    for(let j = 0; j < gameArr.length; j++){
+        gameArr[j] = '';
+    }
+    for(let i = 0; i < gameArea.length; i++){
+        gameArea[i].textContent = '';
+    }
+    count = 1;
+}
+
+const removeEndPage = () => {
+    finalPage.classList.remove('endPage');
+}
+
+const checkuotTheResult = () => {
+    
+    if(!rowWinner().rowOneTest){
+        if(rowWinner().isEveryOne){
+            removeEndPage();
+            resetButton.addEventListener('click' , resetGame);
+        }
+    }
+
+    if(!rowWinner().rowTwo.some(item => item == '')){
+        if(rowWinner().rowTwo.every(item => item == rowWinner().rowTwo[0])){
+            removeEndPage();
+            resetButton.addEventListener('click' , resetGame);
+        }
+    }
+    if(!rowWinner().rowThree.some(item => item == '')){
+        if(rowWinner().rowThree.every(item => item == rowWinner().rowThree[0])){
+            removeEndPage();
+            resetButton.addEventListener('click' , resetGame);
+        }
+    }
+    if(!columnWinner().columnOne.some(item => item == '')){
+        if(columnWinner().columnOne.every(item => item == columnWinner().columnOne[0])){
+            removeEndPage();
+            resetButton.addEventListener('click' , resetGame);
+        }
+    }
+    if(!columnWinner().columnTwo.some(item => item == '')){
+        if(columnWinner().columnTwo.every(item => item == columnWinner().columnTwo[0])){
+            removeEndPage();
+            resetButton.addEventListener('click' , resetGame);
+        }
+    }
+    if(!columnWinner().columnThree.some(item => item == '')){
+        if(columnWinner().columnThree.every(item => item == columnWinner().columnThree[0])){
+            removeEndPage();
+            resetButton.addEventListener('click' , resetGame);
+        }
+    }
+    if(!diagonalWin().diagonalOne.some(item => item == '')){
+        if(diagonalWin().diagonalOne.every(item => item == diagonalWin().diagonalOne[0])){
+            removeEndPage();
+            resetButton.addEventListener('click' , resetGame);
+        }
+    }
+    if(!diagonalWin().diagonalTwo.some(item => item == '')){
+        if(diagonalWin().diagonalTwo.every(item => item == diagonalWin().diagonalTwo[0])){
+            removeEndPage(); 
+            resetButton.addEventListener('click' , resetGame);
+        }
+    }
+}
+
 gameArea.forEach(item => {
     item.addEventListener('click', (e) => {
-        if(gameArr[e.target.dataset.id] != ''){
+        const index = e.target.dataset.id;
+        if(gameArr[index] != ''){
             count--;
             return;
         }
@@ -84,129 +159,12 @@ gameArea.forEach(item => {
             choice = playerTwo;
         }
 
-        gameArea[e.target.dataset.id].textContent = choice;
-        gameArr[e.target.dataset.id] = choice;
+        gameArea[index].textContent = choice;
+        gameArr[index] = choice;
 
-        if(!rowWinner().rowOne.some(item => item == '')){
-            if(rowWinner().rowOne.every(item => item == rowWinner().rowOne[0])){
-                finalPage.classList.remove('endPage'); 
-                resetButton.addEventListener('click' , () => {
-                    finalPage.classList.add('endPage');
-                    for(let j = 0; j < gameArr.length; j++){
-                        gameArr[j] = '';
-                    }
-                    for(let i = 0; i < gameArea.length; i++){
-                        gameArea[i].textContent = '';
-                    }
-                    count = 0;
-                })
-            }
-        }
-        if(!rowWinner().rowTwo.some(item => item == '')){
-            if(rowWinner().rowTwo.every(item => item == rowWinner().rowTwo[0])){
-                finalPage.classList.remove('endPage'); 
-                resetButton.addEventListener('click' , () => {
-                    finalPage.classList.add('endPage');
-                    for(let j = 0; j < gameArr.length; j++){
-                        gameArr[j] = '';
-                    }
-                    for(let i = 0; i < gameArea.length; i++){
-                        gameArea[i].textContent = '';
-                    }
-                    count = 0;
-                })
-            }
-        }
-        if(!rowWinner().rowThree.some(item => item == '')){
-            if(rowWinner().rowThree.every(item => item == rowWinner().rowThree[0])){
-                finalPage.classList.remove('endPage'); 
-                resetButton.addEventListener('click' , () => {
-                    finalPage.classList.add('endPage');
-                    for(let j = 0; j < gameArr.length; j++){
-                        gameArr[j] = '';
-                    }
-                    for(let i = 0; i < gameArea.length; i++){
-                        gameArea[i].textContent = '';
-                    }
-                    count = 0;
-                })
-            }
-        }
-        if(!columnWinner().columnOne.some(item => item == '')){
-            if(columnWinner().columnOne.every(item => item == columnWinner().columnOne[0])){
-                ffinalPage.classList.remove('endPage'); 
-                resetButton.addEventListener('click' , () => {
-                    finalPage.classList.add('endPage');
-                    for(let j = 0; j < gameArr.length; j++){
-                        gameArr[j] = '';
-                    }
-                    for(let i = 0; i < gameArea.length; i++){
-                        gameArea[i].textContent = '';
-                    }
-                    count = 0;
-                })
-            }
-        }
-        if(!columnWinner().columnTwo.some(item => item == '')){
-            if(columnWinner().columnTwo.every(item => item == columnWinner().columnTwo[0])){
-                finalPage.classList.remove('endPage'); 
-                resetButton.addEventListener('click' , () => {
-                    finalPage.classList.add('endPage');
-                    for(let j = 0; j < gameArr.length; j++){
-                        gameArr[j] = '';
-                    }
-                    for(let i = 0; i < gameArea.length; i++){
-                        gameArea[i].textContent = '';
-                    }
-                    count = 0;
-                })
-            }
-        }
-        if(!columnWinner().columnThree.some(item => item == '')){
-            if(columnWinner().columnThree.every(item => item == columnWinner().columnThree[0])){
-                finalPage.classList.remove('endPage'); 
-                resetButton.addEventListener('click' , () => {
-                    finalPage.classList.add('endPage');
-                    for(let j = 0; j < gameArr.length; j++){
-                        gameArr[j] = '';
-                    }
-                    for(let i = 0; i < gameArea.length; i++){
-                        gameArea[i].textContent = '';
-                    }
-                    count = 0;
-                })
-            }
-        }
-        if(!diagonalWin().diagonalOne.some(item => item == '')){
-            if(diagonalWin().diagonalOne.every(item => item == diagonalWin().diagonalOne[0])){
-                finalPage.classList.remove('endPage'); 
-                resetButton.addEventListener('click' , () => {
-                    finalPage.classList.add('endPage');
-                    for(let j = 0; j < gameArr.length; j++){
-                        gameArr[j] = '';
-                    }
-                    for(let i = 0; i < gameArea.length; i++){
-                        gameArea[i].textContent = '';
-                    }
-                    count = 0;
-                })
-            }
-        }
-        if(!diagonalWin().diagonalTwo.some(item => item == '')){
-            if(diagonalWin().diagonalTwo.every(item => item == diagonalWin().diagonalTwo[0])){
-                finalPage.classList.remove('endPage'); 
-                resetButton.addEventListener('click' , () => {
-                    finalPage.classList.add('endPage');
-                    for(let j = 0; j < gameArr.length; j++){
-                        gameArr[j] = '';
-                    }
-                    for(let i = 0; i < gameArea.length; i++){
-                        gameArea[i].textContent = '';
-                    }
-                    count = 0;
-                })
-            }
-        }
+        checkuotTheResult();
+
+        console.log(rowWinner().rowOneTest);
 
         count++;
     })
