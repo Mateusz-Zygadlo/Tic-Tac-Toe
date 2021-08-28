@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="users">
+        <div class="userOne">Player one</div>
+        <div class="round">1</div>
+        <div class="userTwo">Player two</div>
+    </div>
     <div class="container">
         <div class="gameArea" data-id="0"></div>
         <div class="gameArea" data-id="1"></div>
@@ -20,8 +25,11 @@
         <div class="gameArea" data-id="8"></div>
     </div>
     <div class="winnerPage endPage">
-        <h1>winnerPage</h1>
-        <button class="button">reset</button>
+        <h1 class="winnerNick">winnerPage</h1>
+        <div class="buttonSpace">
+            <button class="continue">continue</button>
+            <button class="reset">reset</button>
+        </div>
     </div>
 
     <script src="main.js"></script>
