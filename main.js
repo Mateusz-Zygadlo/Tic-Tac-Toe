@@ -8,13 +8,29 @@ const userOne = document.querySelector('.userOne');
 const userTwo = document.querySelector('.userTwo');
 const roundGame = document.querySelector('.round');
 
+const startPage = document.querySelector('.startPage');
+const computerButton = document.querySelector('.computer');
+const playerButton = document.querySelector('.player');
+
 const winnerNick = document.querySelector('.winnerNick');
 
 let count = 1;
 let choice;
 let round = 1;
+let computerPlay = false;
 let userOneCount = 0;
 let userTwoCount = 0;
+
+let legalMove = [];
+
+computerButton.addEventListener('click', () => {
+    startPage.classList.add('start');
+    computerPlay = true;
+})
+
+playerButton.addEventListener('click', () => {
+    startPage.classList.add('start');
+})
 
 const game = () => {
 
@@ -66,6 +82,24 @@ const rowWinner = () => {
         rowThreeTest,
         isEveryThree,
     }
+}
+const computerMove = () => {
+    legalMove.length = 0;
+    for(let i = 0; i < gameArr.length; i++){
+        if(gameArr[i] == ''){
+            legalMove.push(i);
+        }
+    }
+    const index = Math.floor(Math.random() * legalMove.length);
+
+    legalMove.splice(index - 1, 1);
+
+    gameArea[index].textContent = playerTwo;
+    gameArr[index] = playerTwo;
+    
+    count++;
+
+    console.log(legalMove);
 }
 
 const columnWinner = () => {
@@ -248,7 +282,6 @@ const checkuotTheResult = () => {
 
 gameArea.forEach(item => {
     item.addEventListener('click', (e) => {
-
         const index = e.target.dataset.id;
         if(gameArr[index] != ''){
             count--;
@@ -266,6 +299,13 @@ gameArea.forEach(item => {
 
         checkuotTheResult();
 
+        console.log(gameArr);
+
+        if(computerPlay){
+            computerMove();
+        }
+
         count++;
+        console.log(count);
     })
 })
