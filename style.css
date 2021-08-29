@@ -66,6 +66,7 @@ body{
     align-items: center;
     font-size: 40px;
     flex-direction: column;
+    font-weight: 100;
 }
 .start{
     visibility: hidden;

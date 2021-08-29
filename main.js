@@ -3,6 +3,7 @@ const counter = document.querySelector('.counter');
 const finalPage = document.querySelector('.endPage');
 const resetButton = document.querySelector('.reset');
 const continueButton = document.querySelector('.continue');
+const toHomeButton = document.querySelector('.toHome');
 
 const userOne = document.querySelector('.userOne');
 const userTwo = document.querySelector('.userTwo');
@@ -30,6 +31,13 @@ computerButton.addEventListener('click', () => {
 
 playerButton.addEventListener('click', () => {
     startPage.classList.add('start');
+})
+
+toHomeButton.addEventListener('click', () => {
+    startPage.classList.remove('start');
+    resetGame();
+    finalPage.classList.remove('winnerPage');
+    computerPlay = false;
 })
 
 const game = () => {
@@ -89,11 +97,6 @@ const computerMove = () => {
         if(gameArr[i] == ''){
             legalMove.push(i);
         }
-    }
-
-    if(legalMove.length == 0){
-        console.log('draw');
-        return;
     }
 
     const index = Math.floor(Math.random() * legalMove.length);
@@ -187,6 +190,9 @@ const resetGame = () => {
     
     userOneCount = 0;
     userTwoCount = 0;
+
+    userOne.textContent = `player one [${playerOne}] ${userOneCount}`;
+    userTwo.textContent = `player two [${playerTwo}] ${userTwoCount}`;
     
     roundGame.textContent = round;
 }
@@ -222,6 +228,7 @@ const winner = (arr) => {
 
 const removeEndPage = (arr) => {
     finalPage.classList.remove('endPage');
+    finalPage.classList.add('winnerPage')
     winner(arr);
 }
 
