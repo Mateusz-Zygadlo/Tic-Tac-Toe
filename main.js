@@ -90,16 +90,19 @@ const computerMove = () => {
             legalMove.push(i);
         }
     }
+
+    if(legalMove.length == 0){
+        console.log('draw');
+        return;
+    }
+
     const index = Math.floor(Math.random() * legalMove.length);
+    const indexArr = legalMove[index];
 
-    legalMove.splice(index - 1, 1);
+    gameArea[indexArr].textContent = playerTwo;
+    gameArr[indexArr] = playerTwo;
 
-    gameArea[index].textContent = playerTwo;
-    gameArr[index] = playerTwo;
-    
     count++;
-
-    console.log(legalMove);
 }
 
 const columnWinner = () => {
@@ -297,15 +300,12 @@ gameArea.forEach(item => {
         gameArea[index].textContent = choice;
         gameArr[index] = choice;
 
-        checkuotTheResult();
-
-        console.log(gameArr);
-
         if(computerPlay){
             computerMove();
         }
 
+        checkuotTheResult();
+
         count++;
-        console.log(count);
     })
 })
