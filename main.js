@@ -91,6 +91,7 @@ const rowWinner = () => {
         isEveryThree,
     }
 }
+
 const computerMove = () => {
     legalMove.length = 0;
     for(let i = 0; i < gameArr.length; i++){
@@ -228,7 +229,7 @@ const winner = (arr) => {
 
 const removeEndPage = (arr) => {
     finalPage.classList.remove('endPage');
-    finalPage.classList.add('winnerPage')
+    finalPage.classList.add('winnerPage');
     winner(arr);
 }
 
@@ -294,7 +295,6 @@ gameArea.forEach(item => {
     item.addEventListener('click', (e) => {
         const index = e.target.dataset.id;
         if(gameArr[index] != ''){
-            count--;
             return;
         }
 
@@ -307,11 +307,33 @@ gameArea.forEach(item => {
         gameArea[index].textContent = choice;
         gameArr[index] = choice;
 
+        checkuotTheResult();
+
         if(computerPlay){
-            computerMove();
+            try{
+                computerMove();
+                checkuotTheResult();
+            }catch(err){
+                if(finalPage.classList.contains('endPage')){
+                    console.log('draw');
+                    return;
+                }
+            }
         }
 
-        checkuotTheResult();
+        try{
+            let testBoolean = gameArr.some(item => item == '');
+            if(!testBoolean){
+                let testTwo = gameArr.every(item => item != '');
+                if(testTwo){
+                    if(finalPage.classList.contains('endPage')){
+                        console.log('draw');
+                    }
+                }
+            }
+        }catch(err){
+            console.log(err);
+        }
 
         count++;
     })
