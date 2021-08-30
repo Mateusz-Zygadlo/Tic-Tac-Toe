@@ -21,6 +21,7 @@ let round = 1;
 let computerPlay = false;
 let userOneCount = 0;
 let userTwoCount = 0;
+let winnerCount = 0;
 
 let legalMove = [];
 
@@ -191,6 +192,7 @@ const resetGame = () => {
     
     userOneCount = 0;
     userTwoCount = 0;
+    winnerCount = 0;
 
     userOne.textContent = `player one [${playerOne}] ${userOneCount}`;
     userTwo.textContent = `player two [${playerTwo}] ${userTwoCount}`;
@@ -207,6 +209,7 @@ const continueGame = () => {
         gameArea[i].textContent = '';
     }
     count = 1;
+    winnerCount = 0;
 
     round++;
     
@@ -218,13 +221,23 @@ const continueGame = () => {
 const winner = (arr) => {
     const winnerUser = arr[0];
 
-    if(winnerUser == playerOne){
-        winnerNick.textContent = `player one ${winnerUser} is winner`;
-        userOneCount++;
-    }else{
-        winnerNick.textContent = `player two ${winnerUser} is winner`;
-        userTwoCount++;
+    if(winnerCount == 1){
+        return;
     }
+
+    if(arr.length == 1){
+        winnerNick.textContent = 'Draw';
+    }else{
+        if(winnerUser == playerOne){
+            winnerNick.textContent = `player one [${winnerUser}] is winner`;
+            userOneCount++;
+        }else{
+            winnerNick.textContent = `player two [${winnerUser}] is winner`;
+            userTwoCount++;
+        }
+    }
+
+    winnerCount++;
 }
 
 const removeEndPage = (arr) => {
@@ -294,6 +307,7 @@ const checkuotTheResult = () => {
 gameArea.forEach(item => {
     item.addEventListener('click', (e) => {
         const index = e.target.dataset.id;
+        
         if(gameArr[index] != ''){
             return;
         }
@@ -315,26 +329,30 @@ gameArea.forEach(item => {
                 checkuotTheResult();
             }catch(err){
                 if(finalPage.classList.contains('endPage')){
-                    console.log('draw');
-                    return;
+                    removeEndPage(['draw']);
+                    buttonListener();
                 }
             }
         }
 
-        try{
-            let testBoolean = gameArr.some(item => item == '');
-            if(!testBoolean){
-                let testTwo = gameArr.every(item => item != '');
-                if(testTwo){
-                    if(finalPage.classList.contains('endPage')){
-                        console.log('draw');
+        if(!computerPlay){
+            try{  
+                let testBoolean = gameArr.some(item => item == '');
+                if(!testBoolean){
+                    let testTwo = gameArr.every(item => item != '');
+                    if(testTwo){
+                        if(finalPage.classList.contains('endPage')){
+                            removeEndPage(['draw']);
+                            buttonListener();
+                        }
                     }
                 }
+            }catch(err){
+                console.log(err);
             }
-        }catch(err){
-            console.log(err);
         }
 
         count++;
+        winnerCount = 0;
     })
 })
