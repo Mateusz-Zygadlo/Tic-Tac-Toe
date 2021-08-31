@@ -36,8 +36,9 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 50px;
+    font-size: 70px;
     cursor: pointer;
+    font-weight: 100;
 }
 .winnerPage{
     position: fixed;
